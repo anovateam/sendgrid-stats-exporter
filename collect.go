@@ -150,7 +150,7 @@ func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 
 	statistics, err := collectByDate(queryDate, today)
 	if err != nil {
-		level.Error(c.logger).Log(err)
+		level.Error(c.logger).Log("err", err)
 
 		return
 	}

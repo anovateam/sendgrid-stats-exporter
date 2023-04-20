@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -73,10 +74,11 @@ func main() {
 
 	logger := promlog.New(promlogConfig)
 
-	level.Info(logger).Log("msg", "Starting", exporterName, "version", version.Info(), gitCommit)
+	level.Info(logger).Log("msg", fmt.Sprintf("Starting %s, version: %s, gitCommit: %s", exporterName, version.Info(), gitCommit))
 	level.Info(logger).Log("Build context", version.BuildContext())
 
-	level.Info(logger).Log("msg", "Listening on", *listenAddress)
+	level.Info(logger).Log("msg", fmt.Sprintf("Listening on localhost%s", *listenAddress))
+	level.Info(logger).Log("msg", fmt.Sprintf("Using sendgrid subaccount: %s", *sendGridSubAccount))
 
 	collector := collector(logger)
 	prometheus.MustRegister(collector)
