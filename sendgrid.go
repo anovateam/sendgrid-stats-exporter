@@ -69,6 +69,10 @@ func collectByDate(timeStart time.Time, timeEnd time.Time) ([]*Statistics, error
 
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", *sendGridAPIKey))
 
+	if len(*sendGridSubAccount) != 0 {
+		req.Header.Set("on-behalf-of", *sendGridSubAccount)
+	}
+
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
